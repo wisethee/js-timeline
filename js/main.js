@@ -30,24 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const timelineStep = timelineWidth / 6;
   const timelineContentCardWidth = 384;
 
-  let cardIndex = 0;
+  let activeCardDataId = 0;
   let timelineEventsWidth = 0;
-
-  const removeActiveClass = () => {
-    timelineContentCards.forEach((card) => {
-      card.classList.remove("is-active");
-    });
-  };
-
-  const addActiveClass = (dataId) => {
-    removeActiveClass();
-    timelineContentCards.forEach((card, index) => {
-      if (index <= dataId) {
-        card.classList.add("is-active");
-        cardIndex = dataId;
-      }
-    });
-  };
+  let timelineEventsLineWidth = 69;
 
   // set timeline content width
   const setTimelineContentWidth = (content) => {
@@ -59,16 +44,56 @@ document.addEventListener("DOMContentLoaded", () => {
     content.style.width = `${timelineContentWidth}px`;
   };
 
+  const animateLineWidth = (element, targetWidth, duration) => {
+    const startWidth = parseFloat(getComputedStyle(element).width);
+    const changeInWidth = targetWidth - startWidth;
+    const startTime = performance.now();
+
+    const animate = (currentTime) => {
+      const elapsedTime = currentTime - startTime;
+      const progress = Math.min(elapsedTime / duration, 1);
+      const newWidth = startWidth + changeInWidth * progress;
+
+      element.style.width = `${newWidth}px`;
+
+      // If the animation hasn't finished, repeat the frame
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    // Start the animation
+    requestAnimationFrame(animate);
+  };
+
   // set timeline events width
-  const setTimelineEventsWidth = () => {
-    timelineEvents.style.width = `${69}px`;
+  const animateTimelineEventsWidth = (targetWidth) => {
+    animateLineWidth(timelineEvents, targetWidth, 300); // Animate over 500ms
+  };
+
+  const removeActiveClass = () => {
+    timelineContentCards.forEach((card) => {
+      card.classList.remove("is-active");
+    });
+  };
+
+  const addActiveClass = (dataId) => {
+    let activeDataId;
+    removeActiveClass();
+    timelineContentCards.forEach((card, index) => {
+      if (index === dataId) {
+        card.classList.add("is-active");
+        activeDataId = dataId;
+      }
+    });
+    return activeDataId;
   };
 
   // init timeline
   const initTimeline = () => {
     setTimelineContentWidth(timelineContentTop);
     setTimelineContentWidth(timelineContentBottom);
-    // setTimelineEventsWidth();
+    // setTimelineEventsWidth(timelineEventsLineWidth);
 
     let timelineContentTopOffsetLeft = timelineContentTop.offsetLeft;
     let timelineContentBottomOffsetLeft = timelineContentBottom.offsetLeft;
@@ -83,9 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
           (targetLeft - timelineContentTopOffsetLeft) * 0.1;
         timelineContentBottomOffsetLeft +=
           (targetLeft - timelineContentBottomOffsetLeft) * 0.1;
+        timelineEventsOffsetLeft +=
+          (targetLeft - timelineEventsOffsetLeft) * 0.1;
 
         timelineContentTop.style.left = `${timelineContentTopOffsetLeft}px`;
         timelineContentBottom.style.left = `${timelineContentBottomOffsetLeft}px`;
+        timelineEvents.style.left = `${timelineEventsOffsetLeft}px`;
 
         animationFrameId = requestAnimationFrame(animateSlide);
       }
@@ -99,8 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!animationFrameId) {
           animationFrameId = requestAnimationFrame(animateSlide);
         }
-        // if (cardIndex > 0) cardIndex--;
-        // addActiveClass(cardIndex);
       }
     });
 
@@ -112,15 +138,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!animationFrameId) {
           animationFrameId = requestAnimationFrame(animateSlide);
         }
-        // cardIndex++;
-        // addActiveClass(cardIndex);
       }
     });
 
     timelineContentCards.forEach((card, index) => {
       card.addEventListener("click", () => {
         const dataId = Number(card.dataset.id);
-        addActiveClass(dataId);
+        const newActiveCardDataId = addActiveClass(dataId);
+
+        // Calculate the difference between the current and the clicked card
+        const diff = newActiveCardDataId - activeCardDataId;
+
+        // Update timelineEventsLineWidth
+        timelineEventsLineWidth += diff * timelineStep; // Multiply with timelineStep to get the actual length
+        timelineEventsLineWidth = Math.max(69, timelineEventsLineWidth); // Ensure it doesn't go below the starting width
+
+        // Animate the change
+        animateTimelineEventsWidth(timelineEventsLineWidth);
+
+        // Update activeCardDataId
+        activeCardDataId = newActiveCardDataId;
       });
     });
   };

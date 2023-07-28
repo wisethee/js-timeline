@@ -49,6 +49,28 @@ main {
   overflow: hidden;
 }
 
+.timeline:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  height: 100%;
+  background: linear-gradient(90deg, #ffffff 30%, rgba(255, 255, 255, 0) 100%);
+  z-index: 30;
+}
+
+.timeline:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3rem;
+  height: 100%;
+  background: linear-gradient(270deg, #ffffff 30%, rgba(255, 255, 255, 0) 100%);
+  z-index: 30;
+}
+
 /* ==========================================================================
    [3]. Timeline History Line Styles
    ========================================================================== */
@@ -171,6 +193,7 @@ main {
   transition: all 0.3s ease;
 }
 
+.timeline-card a:hover,
 .timeline-card.is-active a {
   color: #000000;
 }
@@ -180,6 +203,22 @@ main {
   flex-direction: column;
   align-items: flex-start;
   gap: 1.5rem;
+}
+
+.timeline-card .timeline-meta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.timeline-card img {
+  filter: grayscale(1);
+  transition: all 0.3s ease;
+}
+
+.timeline-card a:hover img,
+.timeline-card.is-active img {
+  filter: grayscale(0);
 }
 
 .timeline-card .timeline-meta .timeline-date {
@@ -192,6 +231,7 @@ main {
   transition: all 0.3s ease;
 }
 
+.timeline-card a:hover .timeline-meta .timeline-date,
 .timeline-card.is-active .timeline-meta .timeline-date {
   background-color: #fed100;
 }
@@ -206,6 +246,7 @@ main {
 
 .timeline-card.is-active .timeline-connector {
   background-color: #fed100;
+  transition-delay: 200ms;
 }
 
 .timeline-card .timeline-bullet {
@@ -223,18 +264,3 @@ main {
   border: 2px solid #fed100;
 }
 
-/* ==========================================================================
-   [4.1]. Timeline Overlay Styles
-   ========================================================================== */
-.timeline-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 30;
-  background: linear-gradient(
-    90deg,
-    #ffffff 3%,
-    rgba(255, 255, 255, 0) 9%,
-    rgba(255, 255, 255, 0) 91%,
-    #ffffff 97%
-  );
-}
