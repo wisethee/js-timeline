@@ -27,8 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // get timeline width
   const timelineWidth = timeline.offsetWidth;
-  const timelineStep = timelineWidth / 6;
   const timelineContentCardWidth = 384;
+  const timelineStep = timelineContentCardWidth / 2;
+  const totalCardsWidth =
+    (timelineContentCards.length * timelineContentCardWidth) / 2;
 
   let activeCardDataId = 0;
   let timelineEventsWidth = 0;
@@ -130,11 +132,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    // rightControl.addEventListener("click", () => {
+    //   if (timelineContentTopOffsetLeft >= -timelineWidth) {
+    //     targetLeft -= timelineStep;
+    //     if (targetLeft < -timelineWidth - timelineContentCardWidth / 2)
+    //       targetLeft = -timelineWidth - timelineContentCardWidth / 2;
+    //     if (!animationFrameId) {
+    //       animationFrameId = requestAnimationFrame(animateSlide);
+    //     }
+    //   }
+    // });
+
     rightControl.addEventListener("click", () => {
-      if (timelineContentTopOffsetLeft >= -timelineWidth) {
+      if (timelineContentTopOffsetLeft > -totalCardsWidth + timelineWidth) {
         targetLeft -= timelineStep;
-        if (targetLeft < -timelineWidth - timelineContentCardWidth / 2)
-          targetLeft = -timelineWidth - timelineContentCardWidth / 2;
+        if (
+          targetLeft <
+          -totalCardsWidth + timelineWidth - timelineContentCardWidth / 2
+        )
+          targetLeft =
+            -totalCardsWidth + timelineWidth - timelineContentCardWidth / 2;
         if (!animationFrameId) {
           animationFrameId = requestAnimationFrame(animateSlide);
         }
