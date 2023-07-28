@@ -44,7 +44,6 @@ p {
   text-align: center;
 }
 
-
 /* ==========================================================================
    [2]. Timeline Styles
    ========================================================================== */
@@ -54,6 +53,7 @@ main {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  padding: 0.5rem;
 }
 
 .timeline-wrapper {
@@ -282,4 +282,3 @@ main {
   background-color: #fed100;
   border: 2px solid #fed100;
 }
-
