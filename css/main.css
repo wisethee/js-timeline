@@ -1,263 +1,238 @@
-/*! HTML5 Boilerplate v8.0.0 | MIT License | https://html5boilerplate.com/ */
-
-/* main.css 2.1.0 | MIT License | https://github.com/h5bp/main.css#readme */
-/*
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
- */
-
 /* ==========================================================================
-   Base styles: opinionated defaults
+   [1]. Global Styles
    ========================================================================== */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
 
 html {
-  color: #222;
-  font-size: 1em;
-  line-height: 1.4;
+  scroll-behavior: smooth;
 }
 
-/*
- * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
- *
- * Vendor-prefixed and regular ::selection selectors cannot be combined:
- * https://stackoverflow.com/a/16982510/7133471
- *
- * Customize the background color to match your design.
- */
-
-::-moz-selection {
-  background: #b3d4fc;
-  text-shadow: none;
-}
-
-::selection {
-  background: #b3d4fc;
-  text-shadow: none;
-}
-
-/*
- * A better looking default horizontal rule
- */
-
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #ccc;
-  margin: 1em 0;
-  padding: 0;
-}
-
-/*
- * Remove the gap between audio, canvas, iframes,
- * images, videos and the bottom of their containers:
- * https://github.com/h5bp/html5-boilerplate/issues/440
- */
-
-audio,
-canvas,
-iframe,
-img,
-svg,
-video {
-  vertical-align: middle;
-}
-
-/*
- * Remove default fieldset styles.
- */
-
-fieldset {
-  border: 0;
+body {
   margin: 0;
   padding: 0;
 }
 
-/*
- * Allow only vertical resizing of textareas.
- */
+body {
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+}
 
-textarea {
-  resize: vertical;
+p {
+  margin: 0;
+  padding: 0;
 }
 
 /* ==========================================================================
-   Author's custom styles
+   [2]. Timeline Styles
    ========================================================================== */
-
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
-
-/*
- * Hide visually and from screen readers
- */
-
-.hidden,
-[hidden] {
-  display: none !important;
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
-/*
- * Hide only visually, but have it available for screen readers:
- * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
- *
- * 1. For long content, line feeds are not interpreted as spaces and small width
- *    causes content to wrap 1 word per line:
- *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
- */
+.timeline-wrapper {
+  width: 100%;
+  max-width: 1152px;
+  padding: 1rem;
+  margin-inline: auto;
+}
 
-.sr-only {
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  margin: -1px;
+.timeline {
+  position: relative;
+  padding-inline: 4rem;
+  padding-block: 1.5rem;
   overflow: hidden;
-  padding: 0;
+}
+
+/* ==========================================================================
+   [3]. Timeline History Line Styles
+   ========================================================================== */
+.timeline-history-line {
+  position: relative;
+  width: 100%;
+  height: 3rem;
+}
+
+.timeline-history-line:before,
+.timeline-history-line:after {
+  content: "";
   position: absolute;
-  white-space: nowrap;
-  width: 1px;
-  /* 1 */
+  height: 100%;
+  width: 1.5rem;
+  z-index: 3;
 }
 
-/*
- * Extends the .sr-only class to allow the element
- * to be focusable when navigated to via the keyboard:
- * https://www.drupal.org/node/897638
- */
-
-.sr-only.focusable:active,
-.sr-only.focusable:focus {
-  clip: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  position: static;
-  white-space: inherit;
-  width: auto;
+.timeline-history-line:before {
+  left: 0;
+  background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-/*
- * Hide visually and from screen readers, but maintain layout
- */
-
-.invisible {
-  visibility: hidden;
+.timeline-history-line:after {
+  right: 0;
+  background: linear-gradient(270deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-/*
- * Clearfix: contain floats
- *
- * For modern browsers
- * 1. The space content is one way to avoid an Opera bug when the
- *    `contenteditable` attribute is included anywhere else in the document.
- *    Otherwise it causes space to appear at the top and bottom of elements
- *    that receive the `clearfix` class.
- * 2. The use of `table` rather than `block` is only necessary if using
- *    `:before` to contain the top-margins of child elements.
- */
-
-.clearfix::before,
-.clearfix::after {
-  content: " ";
-  display: table;
+.timeline-history-line-events {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #c3c3c2;
+  z-index: 1;
 }
 
-.clearfix::after {
-  clear: both;
+.timeline-history-line-events:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 20%;
+  height: 2px;
+  background-color: #fed100;
+  z-index: 1;
 }
 
 /* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   These examples override the primary ('mobile first') styles.
-   Modify as content requires.
+   [3]. Timeline Controls Styles
    ========================================================================== */
-
-@media only screen and (min-width: 35em) {
-  /* Style adjustments for viewports that meet the condition */
+.timeline-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 60;
 }
 
-@media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
-  /* Style adjustments for high resolution devices */
+.timeline-controls button {
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #c3c3c2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #c3c3c2;
+}
+
+.timeline-controls button:hover {
+  color: #fed100;
+  border-color: #fed100;
 }
 
 /* ==========================================================================
-   Print styles.
-   Inlined to avoid the additional HTTP request:
-   https://www.phpied.com/delay-loading-your-print-css/
+   [4]. Timeline Content Styles
    ========================================================================== */
-
-@media print {
-  *,
-  *::before,
-  *::after {
-    background: #fff !important;
-    color: #000 !important;
-    /* Black prints faster */
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-
-  a,
-  a:visited {
-    text-decoration: underline;
-  }
-
-  a[href]::after {
-    content: " (" attr(href) ")";
-  }
-
-  abbr[title]::after {
-    content: " (" attr(title) ")";
-  }
-
-  /*
-   * Don't show links that are fragment identifiers,
-   * or use the `javascript:` pseudo protocol
-   */
-  a[href^="#"]::after,
-  a[href^="javascript:"]::after {
-    content: "";
-  }
-
-  pre {
-    white-space: pre-wrap !important;
-  }
-
-  pre,
-  blockquote {
-    border: 1px solid #999;
-    page-break-inside: avoid;
-  }
-
-  /*
-   * Printing Tables:
-   * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
-   */
-  thead {
-    display: table-header-group;
-  }
-
-  tr,
-  img {
-    page-break-inside: avoid;
-  }
-
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3;
-  }
-
-  h2,
-  h3 {
-    page-break-after: avoid;
-  }
+.timeline-history-content-top,
+.timeline-history-content-bottom {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4rem;
+  z-index: 9;
 }
 
+.timeline-history-content-top {
+  transform: translateY(1.875rem);
+}
+
+.timeline-history-content-bottom {
+  transform: translate(11rem, -1.875rem);
+}
+
+/* ==========================================================================
+   [4.1]. Timeline Card Styles
+   ========================================================================== */
+.timeline-card {
+  position: relative;
+  width: 18rem;
+}
+
+.timeline-card a {
+  text-decoration: none;
+  color: #c3c3c2;
+}
+
+.timeline-card.is-active a {
+  color: #000000;
+}
+
+.timeline-card .timeline-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.timeline-card .timeline-meta .timeline-date {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  background-color: #c3c3c2;
+}
+
+.timeline-card.is-active .timeline-meta .timeline-date {
+  background-color: #fed100;
+}
+
+.timeline-card .timeline-connector {
+  width: 2px;
+  margin-left: 21px;
+  background-color: #c3c3c2;
+  height: 1.875rem;
+}
+
+.timeline-card.is-active .timeline-connector {
+  background-color: #fed100;
+}
+
+.timeline-card .timeline-bullet {
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #c3c3c2;
+  border-radius: 50%;
+  margin-left: 1rem;
+}
+
+.timeline-card.is-active .timeline-bullet {
+  background-color: #fed100;
+}
+
+/* ==========================================================================
+   [4.1]. Timeline Overlay Styles
+   ========================================================================== */
+.timeline-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: linear-gradient(
+    90deg,
+    #ffffff 3%,
+    rgba(255, 255, 255, 0) 9%,
+    rgba(255, 255, 255, 0) 91%,
+    #ffffff 97%
+  );
+}
