@@ -27,6 +27,25 @@ p {
 }
 
 /* ==========================================================================
+   [2]. Timeline Headline Styles
+   ========================================================================== */
+.timeline-headline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 72rem;
+  margin-bottom: 3rem;
+}
+
+.timeline-headline p {
+  max-width: 48rem;
+  text-align: center;
+}
+
+
+/* ==========================================================================
    [2]. Timeline Styles
    ========================================================================== */
 main {
